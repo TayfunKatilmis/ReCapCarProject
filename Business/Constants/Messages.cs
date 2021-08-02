@@ -9,7 +9,6 @@ namespace Business.Constants
 {
     public class Messages
     {
-        internal static string ModelNameInvalid = "Araç model ismi 2 karakterden uzun olmalıdır.";
         internal static string CarAdded = "Araç başarıyla sisteme eklendi.";
         internal static string CarDeleted = "Araç başarıyla sistemden silindi.";
         internal static string CarsListed ="Araçlar başarıyla listelendi.";

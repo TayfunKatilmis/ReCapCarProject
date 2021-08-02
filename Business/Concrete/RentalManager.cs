@@ -28,7 +28,7 @@ namespace Business.Concrete
 
             foreach (var item in deneme)
             {
-                if(rental.CarId == item.CarId)
+                if(rental.Id == item.Id)
                 {
                     if(item.ReturnDate > rental.RentDate)
                     {
@@ -60,7 +60,7 @@ namespace Business.Concrete
 
         public IDataResult<Rental> GetById(int id)
         {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == id));
+            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id));
         }
 
         

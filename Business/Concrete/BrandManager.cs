@@ -22,6 +22,7 @@ namespace Business.Concrete
 
         public IResult Add(Brand brand)
         {
+           
             _brandDal.Add(brand);
             return new SuccessResult(Messages.BrandAdded);
         }
@@ -46,7 +47,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Brand>> GetById(int id)
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(b => b.BrandId == id));
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(b => b.Id == id));
         }
 
         
