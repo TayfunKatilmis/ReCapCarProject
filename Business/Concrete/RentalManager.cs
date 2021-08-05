@@ -32,12 +32,12 @@ namespace Business.Concrete
                 {
                     if(item.ReturnDate > rental.RentDate)
                     {
-                        return new ErrorResult(Messages.RentalError);
+                        return new ErrorResult();
                     }
                 }         
             }
             _rentalDal.Add(rental);
-            return new SuccessResult(Messages.RentalAdded);
+            return new SuccessResult();
         }
 
         public IResult Delete(Rental rental)
