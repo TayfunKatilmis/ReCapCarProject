@@ -15,34 +15,37 @@ namespace DataAccess.Concrete.EntityFramework
     public class EfCarDal : EfEntityRepositoryBase<Car, DatabaseContext>, ICarDal
     {
 
-        public List<CarDetailDto> GetCarDetails()
+        public List<CarDetailDto> GetCarsByCarId(Expression<Func<CarDetailDto, bool>> filter)
         {
             using (DatabaseContext context = new DatabaseContext())
             {
                 var result = from c in context.Cars
                              join b in context.Brands
-                             on c.BrandId equals b.Id
+                             on c.BrandId equals b.BrandId
                              join clr in context.Colors
-                             on c.ColorId equals clr.Id
+                             on c.ColorId equals clr.ColorId
                              join cimg in context.CarImages
-                             on c.Id equals cimg.CarId
-                             select new CarDetailDto { Id = c.Id, BrandName = b.Name, CarName=c.CarName,DailyPrice = c.DailyPrice, Description = c.Description, ColorName = clr.Name, ModelYear = c.ModelYear, CarImages=cimg.ImagePath };
-                return result.ToList();
+                             on c.CarId equals cimg.CarId
+                             select new CarDetailDto { Id = c.CarId, BrandName = b.Name, CarName=c.CarName,DailyPrice = c.DailyPrice, Description = c.Description, ColorName = clr.Name, ModelYear = c.ModelYear, CarImages=cimg.ImagePath };
+                return result.Where(filter).ToList();
             }
 
         }
 
-        public List<CarRenameDto> GetCarRename()
+        public List<CarRenameDto> GetCarRename(Expression<Func<CarRenameDto,bool>> filter=null)
         {
             using (DatabaseContext context= new DatabaseContext())
             {
                 var result = from c in context.Cars
                              join b in context.Brands
-                             on c.BrandId equals b.Id
+                             on c.BrandId equals b.BrandId
                              join co in context.Colors
-                             on c.ColorId equals co.Id
-                             select new CarRenameDto { Id = c.Id, BrandName = b.Name, CarName = c.CarName, ColorName = co.Name, DailyPrice = c.DailyPrice, Description = c.Description, ModelYear = c.ModelYear };
-                return result.ToList();
+                             on c.ColorId equals co.ColorId
+                             join cimg in context.CarImages
+                             on c.CarId equals cimg.CarId
+                             select new CarRenameDto { Id = c.CarId, BrandName = b.Name, CarName = c.CarName, ColorName = co.Name, DailyPrice = c.DailyPrice, Description = c.Description, ModelYear = c.ModelYear, CarImages=cimg.ImagePath };
+                return filter==null
+                    ? result.ToList():result.Where(filter).ToList();
             }
         }
     }

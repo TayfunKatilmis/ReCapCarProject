@@ -60,23 +60,29 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == id));
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarDetails()
-        {
-            if (DateTime.Now.Hour == 22)
-            {
-                return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
-            }
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
-        }
-
         public IDataResult<Car> GetById(int id)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == id));
         }
 
         public IDataResult<List<CarRenameDto>> GetCarRename()
         {
             return new SuccessDataResult<List<CarRenameDto>>(_carDal.GetCarRename());
+        }
+
+        public IDataResult<List<CarRenameDto>> GetCarsByColorName(string name)
+        {
+            return new SuccessDataResult<List<CarRenameDto>>(_carDal.GetCarRename(p => p.ColorName == name));
+        }
+
+        public IDataResult<List<CarRenameDto>> GetCarsByBrandName(string name)
+        {
+            return new SuccessDataResult<List<CarRenameDto>>(_carDal.GetCarRename(p => p.BrandName == name));
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarsByCarId(int id)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsByCarId(p =>p.Id==id));
         }
     }
 }
