@@ -26,8 +26,9 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.ColorId equals clr.ColorId
                              join cimg in context.CarImages
                              on c.CarId equals cimg.CarId
-                             select new CarDetailDto { Id = c.CarId, BrandName = b.Name, CarName=c.CarName,DailyPrice = c.DailyPrice, Description = c.Description, ColorName = clr.Name, ModelYear = c.ModelYear, CarImages=cimg.ImagePath };
-                return result.Where(filter).ToList();
+                             select new CarDetailDto { Id = c.CarId,ColorId=clr.ColorId,BrandId=b.BrandId ,BrandName = b.Name, CarName=c.CarName,DailyPrice = c.DailyPrice, Description = c.Description, ColorName = clr.Name, ModelYear = c.ModelYear, CarImages=cimg.ImagePath };
+                return filter == null
+                    ? result.ToList() : result.Where(filter).ToList();
             }
 
         }
