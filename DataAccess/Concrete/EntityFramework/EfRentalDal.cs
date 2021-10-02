@@ -21,7 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join b in context.Brands on c.BrandId equals b.BrandId
                              join ct in context.Customers on r.CustomerId equals ct.CustomerId
                              join u in context.Users on ct.UserId equals u.Id
-                             select new RentalDetailDto { Id = r.CarId, BrandName = b.Name, FirstName = u.FirstName, LastName = u.LastName, RentDate = r.RentDate, ReturnDate = r.ReturnDate };
+                             select new RentalDetailDto { RentalId = r.CarId, BrandName = b.Name, FirstName = u.FirstName, LastName = u.LastName, RentDate = r.RentDate, ReturnDate = r.ReturnDate };
                 return result.ToList();
                              
 
